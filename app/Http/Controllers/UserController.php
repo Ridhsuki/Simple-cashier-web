@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -83,10 +84,30 @@ class UserController extends Controller
         $validate['password'] = bcrypt($validate['password']);
 
         $save = User::create($validate);
-        if($save) {
+        if ($save) {
             return redirect()->route('login')->with('success', 'User created successfully');
         } else {
             return redirect()->back()->with('error', 'Failed to create user');
         }
+    }
+
+    public function loginCheck(Request $request)
+    {
+        $validate = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
+
+        if (Auth::attempt($validate)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/dashboard');
+        } else {
+            return back()->with('error', 'Failed to login, Invalid username or password');
+        }
+    }
+
+    public function logout(){
+        Auth::logout();
+        return redirect()->route('login')->with('success', 'Success to Logout');
     }
 }

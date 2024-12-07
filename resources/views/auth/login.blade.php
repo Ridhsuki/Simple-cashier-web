@@ -18,8 +18,8 @@
                 <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
                     <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                         <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
-                            <div class="d-flex align-items-center justify-content-between mb-3">
-                                <a href="index.html" class="">
+                            <div class="d-flex flex-column align-items-start justify-content-between mb-3">
+                                <a href="/" class="">
                                     <h3 class="text-primary"><i class="fa fa-tree me-2"></i>Cashier App</h3>
                                 </a>
                                 <h3>Sign In</h3>
@@ -34,24 +34,17 @@
                                     {{ session('error') }}
                                 </div>
                             @endsession
-                            <form action="" method="POST">
+                            <form action="{{ route('login.check') }}" method="POST">
                                 @csrf
                                 <div class="form-floating mb-3">
                                     <input type="email" class="form-control" id="floatingInput"
-                                        placeholder="name@example.com">
+                                        placeholder="name@example.com" name="email">
                                     <label for="floatingInput">Email address</label>
                                 </div>
                                 <div class="form-floating mb-4">
-                                    <input type="password" class="form-control" id="floatingPassword"
-                                        placeholder="Password">
+                                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                                        name="password">
                                     <label for="floatingPassword">Password</label>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                                    </div>
-                                    <a href="">Forgot Password</a>
                                 </div>
                                 <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign In</button>
                             </form>
