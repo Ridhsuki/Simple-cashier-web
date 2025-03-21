@@ -25,6 +25,18 @@
                         {{ $title }}
                         <a href="{{ route('produk.create') }}" class="btn btn-sm btn-primary">Tambah</a>
                     </h6>
+
+                    {{-- Flash Message --}}
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @elseif(session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
                     {{-- </div> --}}
                     {{-- <div class="card-body"> --}}
                     <table class="table table-bordered table-responsive">
@@ -45,12 +57,18 @@
                                     <td>{{ rupiah($product->Harga) }}</td>
                                     <td>{{ $product->Stok }}</td>
                                     <td>
-                                        <form action="{{ route('produk.destroy', $product->id) }}" method="POST">
+                                        <form id="form-delete-produk" action="{{ route('produk.destroy', $product->id) }}"
+                                            method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <a href="{{ route('produk.edit', $product->id) }}"
                                                 class="btn btn-sm btn-primary">Edit</a>
                                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                            <button type="button" class="btn btn-sm btn-warning" id="btnTambahStok"
+                                                data-toggle="modal" data-target="#modalTambahStok"
+                                                data-id_product="{{ $product->id }}">
+                                                Tambah Stok
+                                            </button>
                                         </form>
                                     </td>
                                 </tr>
@@ -73,4 +91,22 @@
     <script src="{{ asset('') }}lib/tempusdominus/js/moment.min.js"></script>
     <script src="{{ asset('') }}lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="{{ asset('') }}lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script>
+        $("#form-delete-produk").submit(function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Apakah Anda Yakin?',
+                text: "Data tidak akan bisa kembali",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus Data Ini !'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $(this).unbind().submit();
+                }
+            })
+        });
+    </script>
 @endsection

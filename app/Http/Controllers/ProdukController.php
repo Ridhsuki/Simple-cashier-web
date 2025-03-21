@@ -52,7 +52,7 @@ class ProdukController extends Controller
     public function update(Request $request, Produk $produk)
     {
         $validate = $request->validate([
-            'Nama' => 'required', 
+            'Nama' => 'required',
             'Harga' => 'required|numeric',
             'Stok' => 'required|numeric',
         ]);
@@ -65,8 +65,28 @@ class ProdukController extends Controller
         }
     }
 
-    public function destroy(Produk $produk)
+    public function destroy($id)
     {
-        //
+        $produk = Produk::find($id);
+        $delete = $produk->delete();
+        if ($delete) {
+            return redirect(route('produk.index'))->with('success', 'Produk Berhasil Dihapus');
+        } else {
+            return redirect(route('produk.index'))->with('error', 'Produk Gagal Dihapus');
+        }
+    }
+    public function tambahStok(Request $request, $id)
+    {
+        $validate = $request->validate([
+            'Stok' => 'required|numeric',
+        ]);
+        $produk = Produk::find($id);
+        $produk->Stok += $validate['Stok'];
+        $update = $produk->save();
+        if ($update) {
+            return response()->json(['status' => 200, 'message' => 'Stok Berhasil Ditambahkan']);
+        } else {
+            return response()->json(['status' => 500, 'message' => 'Stok Gagal Ditambahkan']);
+        }
     }
 }
