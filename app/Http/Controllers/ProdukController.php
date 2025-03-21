@@ -41,14 +41,30 @@ class ProdukController extends Controller
     {
         //
     }
-    public function edit(Produk $produk)
+    public function edit($id)
     {
-        //
+        $title = 'Produk';
+        $subtitle = 'Edit';
+        $produk = Produk::find($id);
+
+        return view('admin.produk.edit', compact('title', 'subtitle', 'produk'));
     }
     public function update(Request $request, Produk $produk)
     {
-        //
+        $validate = $request->validate([
+            'Nama' => 'required', 
+            'Harga' => 'required|numeric',
+            'Stok' => 'required|numeric',
+        ]);
+        $validate['Users_id'] = Auth::user()->id;
+        $simpan = $produk->update($validate);
+        if ($simpan) {
+            return response()->json(['status' => 200, 'message' => 'Produk Berhasil Diubah']);
+        } else {
+            return response()->json(['status' => 500, 'message' => 'Produk Gagal']);
+        }
     }
+
     public function destroy(Produk $produk)
     {
         //
