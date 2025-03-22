@@ -5,6 +5,32 @@
     <link href="{{ asset('') }}lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalTambahStok" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Tambah Stok</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="form-tambah-stok" method="post">
+                    <div class="modal-body">
+                        <input type="hidden" name="id_produk" id="id_produk">
+                        <label for=""> Jumlah Stok </label>
+                        <input type="number" name="Stok" id="nilaiTambahStok" class="form-control" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('content')
@@ -12,7 +38,7 @@
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
             aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">{{ $title }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('produk.index') }}">{{ $title }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $subtitle }}</li>
             </ol>
         </nav>
@@ -107,6 +133,55 @@
                     $(this).unbind().submit();
                 }
             })
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Menangani klik pada tombol tambah stok
+            $(document).on('click', '#btnTambahStok', function() {
+                let id_produk = $(this).data('id_product'); // Ambil ID produk dari data atribut
+                $('#id_produk').val(id_produk); // Set nilai id_produk ke input hidden
+                $('#modalTambahStok').modal('show'); // Tampilkan modal
+            });
+
+            // Menangani form submit untuk tambah stok
+            $('#form-tambah-stok').submit(function(e) {
+                e.preventDefault(); // Mencegah form submit standar
+                var dataForm = $(this).serialize() +
+                "&_token={{ csrf_token() }}"; // Menambahkan CSRF token
+
+                // Kirimkan data ke server menggunakan AJAX
+                $.ajax({
+                    type: "PUT",
+                    url: "{{ route('produk.tambahStok', ':id') }}".replace(':id', $('#id_produk')
+                        .val()), // Ganti ID produk
+                    data: dataForm,
+                    dataType: "json",
+                    success: function(data) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: data.message,
+                            confirmButtonText: 'Ok'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href =
+                                "{{ route('produk.index') }}"; // Redirect setelah sukses
+                            }
+                        })
+                        $('#modalTambahStok').modal('hide'); // Menutup modal setelah sukses
+                        $('#form-tambah-stok')[0].reset(); // Mereset form
+                    },
+                    error: function(data) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: data.responseJSON.message, // Menampilkan pesan error
+                            confirmButtonText: 'Ok'
+                        })
+                    }
+                })
+            });
         });
     </script>
 @endsection
