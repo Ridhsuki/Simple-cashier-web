@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('Nama');
             $table->decimal('Harga', 10, 2);
             $table->integer('Stok');
+            $table->unsignedBigInteger('Users_id');
             $table->timestamps();
         });
     }

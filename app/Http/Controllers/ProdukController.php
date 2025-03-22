@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LogStok;
 use App\Models\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -88,5 +89,14 @@ class ProdukController extends Controller
         } else {
             return response()->json(['status' => 500, 'message' => 'Stok Gagal Ditambahkan']);
         }
+    }
+    public function logproduk()
+    {
+        $title = 'Produk';
+        $subtitle = 'Log Produk';
+        $produks = LogStok::join('produks', 'log_stoks.ProdukId', '=', 'produks.id')
+            ->join('users', 'log_stoks.UsersId', '=', 'users.id')
+            ->select('log_stoks.JumlahProduk', 'log_stoks.created_at', 'produks.Nama', 'users.name')->get();
+        return view('admin.produk.logproduk', compact('title', 'subtitle', 'produks'));
     }
 }

@@ -17,6 +17,7 @@
         <div class="navbar-nav w-100">
             <a href="{{ route('dashboard') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
             <a href="{{ route('produk.index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Products</a>
+            <a href="{{ route('produk.logproduk') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Log Products</a>
         </div>
     </nav>
 </div>
