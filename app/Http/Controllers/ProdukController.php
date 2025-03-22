@@ -6,6 +6,8 @@ use App\Models\LogStok;
 use App\Models\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Milon\Barcode\Facades\DNS1DFacade;
 
 class ProdukController extends Controller
 {
@@ -98,5 +100,32 @@ class ProdukController extends Controller
             ->join('users', 'log_stoks.UsersId', '=', 'users.id')
             ->select('log_stoks.JumlahProduk', 'log_stoks.created_at', 'produks.Nama', 'users.name')->get();
         return view('admin.produk.logproduk', compact('title', 'subtitle', 'produks'));
+    }
+    public function cetaklabel(Request $request)
+    {
+        $id_produk = $request->id_produk; // Bisa berupa array atau nilai tunggal
+        $barcodes = [];
+
+        if (is_array($id_produk)) {
+            // Jika $id_produk adalah array, proses setiap ID dalam array
+            foreach ($id_produk as $id) {
+                $id = (string) $id; // Pastikan ID adalah string 
+                $harga = Produk::find($id)->Harga;
+                $barcode = DNS1DFacade::getBarcodeHTML($id, 'C128'); // Membuat barcode untuk setiap ID
+                $barcodes[] = ['barcode' => $barcode, 'harga' => $harga]; // Simpan barcode ke array
+            }
+        } else {
+            // Jika hanya satu nilai, konversi menjadi string dan proses
+            $id_produk = (string) $id_produk;
+            $harga = Produk::find($id_produk)->Harga;
+            $barcode = DNS1DFacade::getBarcodeHTML($id_produk, 'C128'); // Membuat barcode untuk setiap ID
+            $barcodes[] = ['barcode' => $barcode, 'harga' => $harga]; // Simpan barcode ke array
+        }
+        $pdf = Pdf::loadView('admin.produk.cetaklabel', compact('barcodes'));
+
+        $file_path = storage_path('app/public/barcodes.pdf');
+        $pdf->save($file_path);
+
+        return response()->json(['url' => asset('storage/barcodes.pdf')]);
     }
 }

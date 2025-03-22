@@ -44,6 +44,7 @@
         </nav>
         <div class="row vh-100 bg-light rounded  mx-0">
             <div class="col-12">
+                <button type="button" class="btn btn-primary mt-3" id="btnCetakLabel">Cetak Label</button>
                 <div class="bg-light rounded h-100 p-4">
                     {{-- <div class="card"> --}}
                     {{-- <div class="card-header"> --}}
@@ -68,6 +69,7 @@
                     <table class="table table-bordered table-responsive">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th scope="col">No</th>
                                 <th scope="col">Produk</th>
                                 <th scope="col">Harga</th>
@@ -78,6 +80,12 @@
                         <tbody>
                             @foreach ($products as $product)
                                 <tr>
+                                    <td>
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="id_produk[]" type="checkbox"
+                                                value="{{ $product->id }}" id="id_produk_label">
+                                        </div>
+                                    </td>
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $product->Nama }}</td>
                                     <td>{{ rupiah($product->Harga) }}</td>
@@ -148,7 +156,7 @@
             $('#form-tambah-stok').submit(function(e) {
                 e.preventDefault(); // Mencegah form submit standar
                 var dataForm = $(this).serialize() +
-                "&_token={{ csrf_token() }}"; // Menambahkan CSRF token
+                    "&_token={{ csrf_token() }}"; // Menambahkan CSRF token
 
                 // Kirimkan data ke server menggunakan AJAX
                 $.ajax({
@@ -166,7 +174,7 @@
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 window.location.href =
-                                "{{ route('produk.index') }}"; // Redirect setelah sukses
+                                    "{{ route('produk.index') }}"; // Redirect setelah sukses
                             }
                         })
                         $('#modalTambahStok').modal('hide'); // Menutup modal setelah sukses
@@ -183,5 +191,33 @@
                 })
             });
         });
+    </script>
+    <script>
+        $(document).on('click', '#btnCetakLabel', function() {
+            let id_produk = [];
+            $('input[name="id_produk[]"]:checked').each(function() {
+                id_produk.push($(this).val());
+            });
+            $.ajax({
+                type: "POST",
+                url: "{{ route('produk.cetakLabel') }}",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id_produk: id_produk
+                },
+                dataType: "json",
+                success: function(data) {
+                    window.open(data.url, '_blank');
+                },
+                error: function(data) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.message,
+                        confirmButtonText: 'Ok'
+                    })
+                }
+            })
+        })
     </script>
 @endsection
