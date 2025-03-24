@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->date('TanggalPenjualan');
             $table->decimal('TotalHarga', 10, 2);
-            $table->unsignedBigInteger('UserId');
+            $table->unsignedBigInteger('UsersId');
             $table->timestamps();
         });
     }

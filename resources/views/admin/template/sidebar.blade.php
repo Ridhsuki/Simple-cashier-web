@@ -1,7 +1,7 @@
   <!-- Sidebar Start -->
   <div class="sidebar pe-4 pb-3">
     <nav class="navbar bg-light navbar-light">
-        <a href="index.html" class="navbar-brand mx-4 mb-3">
+        <a href="{{ route('dashboard') }}" class="navbar-brand mx-4 mb-3">
             <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
         </a>
         <div class="d-flex align-items-center ms-4 mb-4">
@@ -17,6 +17,7 @@
         <div class="navbar-nav w-100">
             <a href="{{ route('dashboard') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
             <a href="{{ route('produk.index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Products</a>
+            <a href="{{ route('penjualan.index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Penjualan</a>
             <a href="{{ route('produk.logproduk') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Log Products</a>
         </div>
     </nav>

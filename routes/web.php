@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +24,5 @@ Route::group(['middleware'=>['auth']], function (){
     Route::put('produk/edit/{id}/tambahStok',[ProdukController::class,'tambahStok'])->name('produk.tambahStok');
     Route::get('produk/logproduk',[ProdukController::class,'logproduk'])->name('produk.logproduk');
     Route::resource('produk', ProdukController::class);
+    Route::resource('penjualan', PenjualanController::class);
 });
