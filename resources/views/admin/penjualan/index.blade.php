@@ -83,7 +83,23 @@
                                     <td>{{ rupiah($penjualan->TotalHarga) }}</td>
                                     <td>{{ $penjualan->name }}</td>
                                     <td>
-                                        Aksi
+                                        @if ($penjualan->StatusBayar == 'Lunas')
+                                            <a href="{{ route('penjualan.nota', $penjualan->id) }}" class="btn btn-success"
+                                                target="_blank">Nota</a>
+                                        @else
+                                            <div class="dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                    id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Bayar
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <li><a class="dropdown-item"
+                                                            href="{{ route('penjualan.bayarCash', $penjualan->id) }}">Cash</a>
+                                                    </li>
+                                                    <li><a class="dropdown-item" href="#">Transfer/Qris</a></li>
+                                                </ul>
+                                            </div>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -103,4 +119,8 @@
     <script src="{{ asset('') }}lib/tempusdominus/js/moment.min.js"></script>
     <script src="{{ asset('') }}lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="{{ asset('') }}lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 @endsection

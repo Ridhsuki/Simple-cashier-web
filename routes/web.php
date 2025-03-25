@@ -25,4 +25,7 @@ Route::group(['middleware'=>['auth']], function (){
     Route::get('produk/logproduk',[ProdukController::class,'logproduk'])->name('produk.logproduk');
     Route::resource('produk', ProdukController::class);
     Route::resource('penjualan', PenjualanController::class);
+    Route::get('penjualan/bayarCash/{id}',[PenjualanController::class,'bayarCash'])->name('penjualan.bayarCash');
+    Route::post('penjualan/bayarCash',[PenjualanController::class,'bayarCashStore'])->name('penjualan.bayarCashStore');
+    Route::get('penjualan/nota/{id}',[PenjualanController::class,'nota'])->name('penjualan.nota');
 });
