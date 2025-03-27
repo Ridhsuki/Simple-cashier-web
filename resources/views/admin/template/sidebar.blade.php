@@ -15,11 +15,23 @@
             </div>
         </div>
         <div class="navbar-nav w-100">
-            <a href="{{ route('dashboard') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-            <a href="{{ route('produk.index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Products</a>
-            <a href="{{ route('penjualan.index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Penjualan</a>
-            <a href="{{ route('produk.logproduk') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Log Products</a>
-        </div>
+            <!-- Dashboard -->
+            <a href="{{ route('dashboard') }}" class="nav-item nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <i class="fa fa-tachometer-alt me-2"></i>Dashboard
+            </a>
+            <!-- Products -->
+            <a href="{{ route('produk.index') }}" class="nav-item nav-link {{ request()->routeIs('produk.index') ? 'active' : '' }}">
+                <i class="fa fa-th me-2"></i>Products
+            </a>
+            <!-- Penjualan -->
+            <a href="{{ route('penjualan.index') }}" class="nav-item nav-link {{ request()->routeIs('penjualan.index') ? 'active' : '' }}">
+                <i class="fa fa-th me-2"></i>Penjualan
+            </a>
+            <!-- Log Products -->
+            <a href="{{ route('produk.logproduk') }}" class="nav-item nav-link {{ request()->routeIs('produk.logproduk') ? 'active' : '' }}">
+                <i class="fa fa-th me-2"></i>Log Products
+            </a>
+        </div>        
     </nav>
 </div>
 <!-- Sidebar End -->
