@@ -284,7 +284,7 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: data.message,
+                        text: 'Harap Checklist Produk untuk melanjutkan mencetak label',
                         confirmButtonText: 'Ok'
                     })
                 }
