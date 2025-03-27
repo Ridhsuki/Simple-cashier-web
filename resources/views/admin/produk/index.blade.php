@@ -10,27 +10,93 @@
     <div class="modal fade" id="modalTambahStok" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content custom-modal">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Tambah Stok</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="form-tambah-stok" method="post">
                     <div class="modal-body">
                         <input type="hidden" name="id_produk" id="id_produk">
-                        <label for=""> Jumlah Stok </label>
-                        <input type="number" name="Stok" id="nilaiTambahStok" class="form-control" required>
+                        <label for="nilaiTambahStok" class="form-label">Jumlah Stok</label>
+                        <input type="number" name="Stok" id="nilaiTambahStok" class="form-control custom-input"
+                            required>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-submit">Submit</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+    <!-- Custom Modal Styling -->
+    <style>
+        /* Custom Modal Styling */
+        .custom-modal {
+            background: #f8f9fa;
+            /* Light gray background */
+            border-radius: 15px;
+            /* Rounded corners */
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            /* Soft shadow */
+        }
+
+        .custom-modal .modal-header {
+            border-bottom: 1px solid #ddd;
+            background-color: #4e73df;
+            /* Bootstrap primary color */
+            color: white;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            padding: 15px;
+        }
+
+        .custom-modal .modal-title {
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .custom-modal .modal-body {
+            padding: 20px;
+        }
+
+        .custom-modal .modal-footer {
+            border-top: 1px solid #ddd;
+            padding: 15px;
+        }
+
+        .custom-input {
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            font-size: 1rem;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-input:focus {
+            border-color: #4e73df;
+            /* Focus color to match the modal */
+            box-shadow: 0 0 8px rgba(0, 116, 255, 0.5);
+        }
+
+        .btn-submit {
+            background-color: #4e73df;
+            border-color: #4e73df;
+            border-radius: 10px;
+            padding: 8px 20px;
+            font-weight: bold;
+            color: white;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2e59d9;
+            border-color: #2e59d9;
+            cursor: pointer;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -150,6 +216,11 @@
                 let id_produk = $(this).data('id_product'); // Ambil ID produk dari data atribut
                 $('#id_produk').val(id_produk); // Set nilai id_produk ke input hidden
                 $('#modalTambahStok').modal('show'); // Tampilkan modal
+            });
+
+            // Menambahkan auto-focus saat modal muncul
+            $('#modalTambahStok').on('shown.bs.modal', function() {
+                $('#nilaiTambahStok').trigger('focus'); // Fokus pada input dengan id nilaiTambahStok
             });
 
             // Menangani form submit untuk tambah stok
