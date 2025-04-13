@@ -10,8 +10,8 @@
                 <div class="bg-success rounded-circle border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
             </div>
             <div class="ms-3">
-                <h6 class="mb-0">Adillah Hakkan</h6>
-                <span>Admin</span>
+                <h6 class="mb-0">{{ Auth::user()->name }}</h6>
+                <span>{{ Auth::user()->role }}</span>
             </div>
         </div>
         <div class="navbar-nav w-100">
@@ -20,11 +20,11 @@
                 <i class="fa fa-tachometer-alt me-2"></i>Dashboard
             </a>
             <!-- Products -->
-            <a href="{{ route('produk.index') }}" class="nav-item nav-link {{ request()->routeIs('produk.index') ? 'active' : '' }}">
+            <a href="{{ route('produk.index') }}" class="nav-item nav-link {{ request()->is('produk*') && !request()->is('produk/logproduk*') ? 'active' : '' }}">
                 <i class="fa fa-cube me-2"></i>Produk
             </a>
             <!-- Penjualan -->
-            <a href="{{ route('penjualan.index') }}" class="nav-item nav-link {{ request()->routeIs('penjualan.index') ? 'active' : '' }}">
+            <a href="{{ route('penjualan.index') }}" class="nav-item nav-link {{ request()->routeIs('penjualan*') ? 'active' : '' }}">
                 <i class="fa fa-shopping-cart me-2"></i>Penjualan
             </a>
             <!-- Log Products -->
@@ -117,7 +117,7 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                     <img class="rounded-circle me-lg-2" src="{{asset('img/user.jpg')}}" alt="" style="width: 40px; height: 40px;">
-                    <span class="d-none d-lg-inline-flex">John Doe</span>
+                    <span class="d-none d-lg-inline-flex">{{ Auth::user()->name }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                     <a href="#" class="dropdown-item">My Profile</a>
