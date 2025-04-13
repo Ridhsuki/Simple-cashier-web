@@ -21,15 +21,15 @@
             </a>
             <!-- Products -->
             <a href="{{ route('produk.index') }}" class="nav-item nav-link {{ request()->routeIs('produk.index') ? 'active' : '' }}">
-                <i class="fa fa-th me-2"></i>Products
+                <i class="fa fa-cube me-2"></i>Produk
             </a>
             <!-- Penjualan -->
             <a href="{{ route('penjualan.index') }}" class="nav-item nav-link {{ request()->routeIs('penjualan.index') ? 'active' : '' }}">
-                <i class="fa fa-th me-2"></i>Penjualan
+                <i class="fa fa-shopping-cart me-2"></i>Penjualan
             </a>
             <!-- Log Products -->
             <a href="{{ route('produk.logproduk') }}" class="nav-item nav-link {{ request()->routeIs('produk.logproduk') ? 'active' : '' }}">
-                <i class="fa fa-th me-2"></i>Log Products
+                <i class="fa fa-history me-2"></i>Log Produk
             </a>
         </div>        
     </nav>
