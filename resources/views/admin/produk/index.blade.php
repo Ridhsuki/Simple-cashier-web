@@ -56,6 +56,7 @@
         .custom-modal .modal-title {
             font-weight: bold;
             font-size: 1.25rem;
+            color: white;
         }
 
         .custom-modal .modal-body {
