@@ -5,32 +5,6 @@
     <link href="{{ asset('') }}lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-
-    <!-- Modal -->
-    <div class="modal fade" id="modalTambahStok" data-backdrop="static" data-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" style="color: white;" id="staticBackdropLabel">Tambah Stok</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form id="form-tambah-stok" method="post">
-                    <div class="modal-body">
-                        <input type="hidden" name="id_produk" id="id_produk">
-                        <label for=""> Jumlah Stok </label>
-                        <input type="number" name="Stok" id="nilaiTambahStok" class="form-control" required>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @section('content')
@@ -41,7 +15,7 @@
                 <li class="breadcrumb-item">{{ $title }}</li>
             </ol>
         </nav>
-        <div class="row vh-100 bg-light rounded  mx-0">
+        <div class="row bg-light rounded mx-0">
             <div class="col-12">
                 <div class="bg-light rounded h-100 p-4">
                     {{-- <div class="card"> --}}
@@ -64,7 +38,7 @@
 
                     {{-- </div> --}}
                     {{-- <div class="card-body"> --}}
-                    <table class="table table-bordered table-responsive">
+                    <table class="table text-start align-middle table-bordered table-hover mb-0 table-responsive">
                         <thead>
                             <tr>
                                 <th scope="col">No</th>

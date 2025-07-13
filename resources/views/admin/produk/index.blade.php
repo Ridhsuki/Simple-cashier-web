@@ -6,29 +6,7 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
-    <!-- Modal -->
-    <div class="modal fade" id="modalTambahStok" data-backdrop="static" data-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content custom-modal">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Tambah Stok</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form id="form-tambah-stok" method="post">
-                    <div class="modal-body">
-                        <input type="hidden" name="id_produk" id="id_produk">
-                        <label for="nilaiTambahStok" class="form-label">Jumlah Stok</label>
-                        <input type="number" name="Stok" id="nilaiTambahStok" class="form-control custom-input"
-                            required>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-submit">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+
 
     <!-- Custom Modal Styling -->
     <style>
@@ -101,6 +79,29 @@
 @endsection
 
 @section('content')
+    <!-- Modal -->
+    <div class="modal fade" id="modalTambahStok" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content custom-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Tambah Stok</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="form-tambah-stok" method="post">
+                    <div class="modal-body">
+                        <input type="hidden" name="id_produk" id="id_produk">
+                        <label for="nilaiTambahStok" class="form-label">Jumlah Stok</label>
+                        <input type="number" name="Stok" id="nilaiTambahStok" class="form-control custom-input"
+                            required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="container-fluid pt-4 px-4">
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
             aria-label="breadcrumb">
@@ -108,10 +109,10 @@
                 <li class="breadcrumb-item">{{ $title }}</li>
             </ol>
         </nav>
-        <div class="row vh-100 bg-light rounded  mx-0">
+        <div class="row bg-light rounded mx-0">
             <div class="col-12">
                 <button type="button" class="btn btn-primary mt-3" id="btnCetakLabel">Cetak Label</button>
-                <div class="bg-light rounded h-100 p-4">
+                <div class="bg-light rounded p-4">
                     {{-- <div class="card"> --}}
                     {{-- <div class="card-header"> --}}
                     <h6 class="mb-4 d-flex justify-content-between align-items-center">
@@ -132,7 +133,7 @@
 
                     {{-- </div> --}}
                     {{-- <div class="card-body"> --}}
-                    <table class="table table-bordered table-responsive">
+                    <table class="table text-start align-middle table-bordered table-hover mb-0">
                         <thead>
                             <tr>
                                 <th>#</th>

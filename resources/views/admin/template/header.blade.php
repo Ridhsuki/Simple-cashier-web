@@ -39,6 +39,3 @@
             </div>
         </div>
         <!-- Spinner End -->
-
-
-      

@@ -16,7 +16,7 @@
                 <li class="breadcrumb-item active" aria-current="page">{{ $subtitle }}</li>
             </ol>
         </nav>
-        <div class="row vh-100 bg-light rounded  mx-0">
+        <div class="row bg-light rounded  mx-0">
             <div class="col-12">
                 <div class="bg-light rounded h-100 p-4">
                     {{-- <div class="card"> --}}
