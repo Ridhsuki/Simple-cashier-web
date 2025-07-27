@@ -20,7 +20,9 @@ class PenjualanController extends Controller
         $subtitle = 'Index';
         $penjualans = Penjualan::join('users', 'penjualans.UsersId', '=', 'users.id')
             ->Leftjoin('bayars', 'penjualans.id', '=', 'bayars.PenjualanId')
-            ->select('penjualans.*', 'users.name', 'bayars.StatusBayar')->get();
+            ->select('penjualans.*', 'users.name', 'bayars.StatusBayar')
+            ->with(['detailPenjualan.produk'])
+            ->get();
         return view('admin.penjualan.index', compact('penjualans', 'title', 'subtitle'));
     }
 
@@ -40,7 +42,6 @@ class PenjualanController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $validate = $request->validate([
             'ProdukId' => 'required',
             'JumlahProduk' => 'required',

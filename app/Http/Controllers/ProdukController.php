@@ -7,6 +7,7 @@ use App\Models\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Database\QueryException;
 use Milon\Barcode\Facades\DNS1DFacade;
 
 class ProdukController extends Controller
@@ -71,11 +72,26 @@ class ProdukController extends Controller
     public function destroy($id)
     {
         $produk = Produk::find($id);
-        $delete = $produk->delete();
-        if ($delete) {
-            return redirect(route('produk.index'))->with('success', 'Produk Berhasil Dihapus');
-        } else {
-            return redirect(route('produk.index'))->with('error', 'Produk Gagal Dihapus');
+
+        if (!$produk) {
+            return redirect()->route('produk.index')->with('error', 'Produk tidak ditemukan.');
+        }
+
+        try {
+            $delete = $produk->delete();
+
+            if ($delete) {
+                return redirect(route('produk.index'))->with('success', 'Produk berhasil dihapus.');
+            } else {
+                return redirect(route('produk.index'))->with('error', 'Produk gagal dihapus.');
+            }
+        } catch (QueryException $e) {
+            if ($e->getCode() == '23000') {
+                return redirect()->route('produk.index')->with('error', 'Produk tidak dapat dihapus karena masih tercatat dalam transaksi penjualan. Silakan periksa detail penjualan terkait.');
+            }
+            return redirect()->route('produk.index')->with('error', 'Terjadi kesalahan database yang tidak terduga: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            return redirect()->route('produk.index')->with('error', 'Terjadi kesalahan tak terduga: ' . $e->getMessage());
         }
     }
     public function tambahStok(Request $request, $id)

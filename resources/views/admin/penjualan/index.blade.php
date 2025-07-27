@@ -18,8 +18,6 @@
         <div class="row bg-light rounded mx-0">
             <div class="col-12">
                 <div class="bg-light rounded h-100 p-4">
-                    {{-- <div class="card"> --}}
-                    {{-- <div class="card-header"> --}}
                     <h6 class="mb-4 d-flex justify-content-between align-items-center">
                         {{ $title }}
                         <a href="{{ route('penjualan.create') }}" class="btn btn-sm btn-primary">Tambah</a>
@@ -36,13 +34,12 @@
                         </div>
                     @endif
 
-                    {{-- </div> --}}
-                    {{-- <div class="card-body"> --}}
                     <table class="table text-start align-middle table-bordered table-hover mb-0 table-responsive">
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">Tanggal Penjualan</th>
+                                <th scope="col">Produk</th>
                                 <th scope="col">Harga</th>
                                 <th scope="col">Penjual</th>
                                 <th scope="col">Aksi</th>
@@ -53,6 +50,21 @@
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $penjualan->TanggalPenjualan }}</td>
+                                    <td>
+                                        @if ($penjualan->detailPenjualan->isNotEmpty())
+                                            @foreach ($penjualan->detailPenjualan as $detail)
+                                                @if ($detail->produk)
+                                                    {{-- Tambahkan pengecekan ini --}}
+                                                    {{ $detail->produk->Nama }} ({{ $detail->JumlahProduk }}
+                                                    unit)<br>
+                                                @else
+                                                    Produk Tidak Ditemukan (ID: {{ $detail->ProdukId }})<br>
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            Tidak ada produk
+                                        @endif
+                                    </td>
                                     <td>{{ rupiah($penjualan->TotalHarga) }}</td>
                                     <td>{{ $penjualan->name }}</td>
                                     <td>

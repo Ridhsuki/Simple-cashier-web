@@ -113,8 +113,6 @@
             <div class="col-12">
                 <button type="button" class="btn btn-primary mt-3" id="btnCetakLabel">Cetak Label</button>
                 <div class="bg-light rounded p-4">
-                    {{-- <div class="card"> --}}
-                    {{-- <div class="card-header"> --}}
                     <h6 class="mb-4 d-flex justify-content-between align-items-center">
                         {{ $title }}
                         <a href="{{ route('produk.create') }}" class="btn btn-sm btn-primary">Tambah</a>
@@ -131,8 +129,6 @@
                         </div>
                     @endif
 
-                    {{-- </div> --}}
-                    {{-- <div class="card-body"> --}}
                     <table class="table text-start align-middle table-bordered table-hover mb-0">
                         <thead>
                             <tr>
@@ -176,8 +172,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                    {{-- </div> --}}
-                    {{-- </div> --}}
                 </div>
             </div>
         </div>
