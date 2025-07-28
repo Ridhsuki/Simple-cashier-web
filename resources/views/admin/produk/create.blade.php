@@ -43,7 +43,7 @@
                                     <input type="text" name="Nama" class="form-control" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="" class="form-label">Harga</label>
+                                    <label for="" class="form-label">Harga (Rp)</label>
                                     <input type="number" name="Harga" class="form-control" required>
                                 </div>
                                 <div class="mb-3">

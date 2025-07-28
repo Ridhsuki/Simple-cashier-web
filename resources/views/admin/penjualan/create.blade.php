@@ -82,7 +82,7 @@
                                     <td colspan="3">
                                         Total harga
                                     </td>
-                                    <td colspan="2">
+                                    <td colspan="2">Rp
                                         <input type="text" id="total" readonly class="form-control" name="total">
                                     </td>
                             </tfooter>

@@ -12,8 +12,6 @@
         <div class="row vh-100 bg-light rounded  mx-0">
             <div class="col-12">
                 <div class="bg-light rounded h-100 p-4">
-                    {{-- <div class="card"> --}}
-                    {{-- <div class="card-header"> --}}
                     <h6 class="mb-4 d-flex justify-content-between align-items-center">
                         {{ $title }}
                         <a href="{{ route('produk.index') }}" class="btn btn-sm btn-warning">Kembali</a>
@@ -44,7 +42,7 @@
                                         required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="" class="form-label">Harga</label>
+                                    <label for="" class="form-label">Harga (Rp)</label>
                                     <input type="number" name="Harga" value="{{ $produk->Harga }}" class="form-control"
                                         required>
                                 </div>
@@ -57,8 +55,6 @@
                             </form>
                         </div>
                     </div>
-                    {{-- </div> --}}
-                    {{-- </div> --}}
                 </div>
             </div>
         </div>

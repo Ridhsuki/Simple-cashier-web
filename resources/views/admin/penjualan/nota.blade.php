@@ -55,11 +55,11 @@
             </tr>
             <tr>
                 <td colspan="4" align="right">Jumlah Bayar</td>
-                <td>{{ $totalBayar }}</td>
+                <td>{{ rupiah($totalBayar) }}</td>
             </tr>
             <tr>
                 <td colspan="4" align="right">Kembalian</td>
-                <td>{{ $kembalian }}</td>
+                <td>{{ rupiah($kembalian) }}</td>
             </tr>
 
             <tr>
