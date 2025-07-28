@@ -76,7 +76,7 @@
                                 @foreach ($detailpenjualan as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->NamaProduk }}</td>
+                                        <td>{{ $item->Nama }}</td>
                                         <td>{{ rupiah($item->harga) }}</td>
                                         <td>{{ $item->JumlahProduk }}</td>
                                         <td>{{ rupiah($item->SubTotal) }}</td>
@@ -126,10 +126,20 @@
         $(document).ready(function() {
             $('#btnSimpan').on('click', function() {
                 var totalHarga = $('#totalHarga').val();
-                var totalHarga = totalHarga.replace(/[^0-9,]/g, '').replace(",", ".");
+                totalHarga = totalHarga.replace(/[^0-9,]/g, '').replace(",", ".");
                 var JumlahBayar = $('#JumlahBayar').val();
                 var Kembalian = $('#Kembalian').val();
                 var id = '{{ $penjualan->id }}';
+
+                if (parseFloat(JumlahBayar) < parseFloat(totalHarga)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Pembayaran Tidak Cukup',
+                        text: 'Jumlah pembayaran kurang dari total harga. Silakan bayar sesuai jumlah yang tertera.',
+                        confirmButtonText: 'Tutup',
+                    });
+                    return;
+                }
                 $.ajax({
                     type: "POST",
                     url: "{{ route('penjualan.bayarCashStore') }}",

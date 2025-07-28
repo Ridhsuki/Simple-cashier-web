@@ -80,7 +80,8 @@
                                                     <li><a class="dropdown-item"
                                                             href="{{ route('penjualan.bayarCash', $penjualan->id) }}">Cash</a>
                                                     </li>
-                                                    <li><a class="dropdown-item" href="#">Transfer/Qris</a></li>
+                                                    <li><a class="dropdown-item" href="#"
+                                                            id="qris-not-available">Transfer/Qris</a></li>
                                                 </ul>
                                             </div>
                                         @endif
@@ -111,4 +112,23 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#qris-not-available').on('click', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Fitur Belum Tersedia',
+                    text: 'Fitur Transfer/Qris belum tersedia saat ini. Jika Anda mendukung pengembangan fitur ini, silakan bantu dengan dukungan Anda.',
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: 'Support Developer',
+                    cancelButtonText: 'Tutup',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.open('https://saweria.co/basukiridho', '_blank');
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
