@@ -154,8 +154,8 @@
                                     <td>{{ rupiah($product->Harga) }}</td>
                                     <td>{{ $product->Stok }}</td>
                                     <td>
-                                        <form id="form-delete-produk" action="{{ route('produk.destroy', $product->id) }}"
-                                            method="POST">
+                                        <form class="form-delete-produk"
+                                            action="{{ route('produk.destroy', $product->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <a href="{{ route('produk.edit', $product->id) }}"
@@ -187,8 +187,10 @@
     <script src="{{ asset('') }}lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="{{ asset('') }}lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
     <script>
-        $("#form-delete-produk").submit(function(e) {
+        $(document).on('submit', '.form-delete-produk', function(e) {
             e.preventDefault();
+
+            var form = this;
             Swal.fire({
                 title: 'Apakah Anda Yakin?',
                 text: "Data tidak akan bisa kembali",
@@ -199,7 +201,7 @@
                 confirmButtonText: 'Ya, Hapus Data Ini !'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $(this).unbind().submit();
+                    form.submit();
                 }
             })
         });
