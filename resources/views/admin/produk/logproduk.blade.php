@@ -41,7 +41,23 @@
                                 <th scope="col">No</th>
                                 <th scope="col">Produk</th>
                                 <th scope="col">+/- Stok</th>
-                                <th scope="col">Nama</th>
+                                <th scope="col">Nama <svg xmlns="http://www.w3.org/2000/svg" data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Nama yang di tampilkan ini berdasarkan user yang menambahkan produk pertama kali, bukan nama user yang melakukan penambahan atau pengurangan stok"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="0.7em"
+                                        height="0.7em" viewBox="0 0 256 256" xml:space="preserve">
+                                        <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
+                                            transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
+                                            <path
+                                                d="M 49.083 71.489 l 5.776 -21.96 l 4.186 -15.247 c 3.497 -16.18 -32.704 -2.439 -38.002 1.695 l 0.425 4.853 c 4.824 -3.395 23.091 -7.744 19.449 4.275 l -1.634 6.135 l 0 0 l -8.329 31.071 c -3.497 16.18 32.704 2.439 38.002 -1.695 l -0.425 -4.853 C 63.708 79.159 45.441 83.508 49.083 71.489 z"
+                                                style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;"
+                                                transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                                            <circle cx="53.871" cy="11.201" r="11.201"
+                                                style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;"
+                                                transform="  matrix(1 0 0 1 0 0) " />
+                                        </g>
+                                    </svg>
+                                </th>
                                 <th scope="col">Tanggal</th>
                             </tr>
                         </thead>
@@ -51,7 +67,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $produk->Nama }}</td>
                                     <td>{{ $produk->JumlahProduk }}</td>
-                                    <td>{{ $produk->name }}</td>
+                                    <td class="flex">{{ $produk->name }} </td>
                                     <td>{{ $produk->created_at->format('Y-m-d') }}</td>
                                 </tr>
                             @empty
@@ -75,4 +91,9 @@
     <script src="{{ asset('') }}lib/tempusdominus/js/moment.min.js"></script>
     <script src="{{ asset('') }}lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="{{ asset('') }}lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script>
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
 @endsection

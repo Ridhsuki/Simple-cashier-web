@@ -132,7 +132,11 @@
                     <table class="table text-start align-middle table-bordered table-hover mb-0">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="selectAll">
+                                    </div>
+                                </th>
                                 <th scope="col">No</th>
                                 <th scope="col">Produk</th>
                                 <th scope="col">Harga</th>
@@ -291,5 +295,25 @@
                 }
             })
         })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#selectAll').click(function() {
+                if ($(this).prop('checked')) {
+                    $('input[name="id_produk[]"]').prop('checked', true);
+                } else {
+                    $('input[name="id_produk[]"]').prop('checked', false);
+                }
+            });
+
+            $('input[name="id_produk[]"]').click(function() {
+                if ($('input[name="id_produk[]"]:checked').length == $('input[name="id_produk[]"]')
+                    .length) {
+                    $('#selectAll').prop('checked', true);
+                } else {
+                    $('#selectAll').prop('checked', false);
+                }
+            });
+        });
     </script>
 @endsection
