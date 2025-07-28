@@ -41,7 +41,7 @@
             @foreach ($detailpenjualan as $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $item->NamaProduk }}</td>
+                     <td>{{ $item->NamaProduk ?? 'Produk Tidak Ditemukan' }}</td>
                     <td>{{ rupiah($item->harga) }}</td>
                     <td>{{ $item->JumlahProduk }}</td>
                     <td>{{ rupiah($item->SubTotal) }}</td>

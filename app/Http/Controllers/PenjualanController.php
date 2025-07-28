@@ -90,23 +90,6 @@ class PenjualanController extends Controller
             DB::rollBack();
             return response()->json(['status' => 500, 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
-        // $data_penjualan = [
-        //     'TanggalPenjualan' => date('Y-m-d'),
-        //     'UsersId' => Auth::user()->id,
-        //     'TotalHarga' => $request->total,
-        // ];
-        // $simpanPenjualan = Penjualan::create($data_penjualan);
-        // foreach ($request->ProdukId as $key => $ProdukId) {
-        //     $simpanDetailPenjualan = DetailPenjualan::create([
-        //         'PenjualanId' => $simpanPenjualan->id,
-        //         'ProdukId' => $ProdukId,
-        //         'harga' => $request->harga[$key],
-        //         'JumlahProduk' => $request->JumlahProduk[$key],
-        //         'SubTotal' => $request->TotalHarga[$key],
-        //     ]);
-        // }
-
-        // return redirect()->route('penjualan.index')->with('success', 'Penjualan Berhasil Ditambahkan');
     }
     /**
      * Display the specified resource.
@@ -174,7 +157,9 @@ class PenjualanController extends Controller
     {
         $penjualan = Penjualan::find($id);
         $detailpenjualan = DetailPenjualan::join('produks', 'detail_penjualans.ProdukId', '=', 'produks.id')
-            ->where('PenjualanId', $id)->get();
+            ->where('PenjualanId', $id)
+            ->select('detail_penjualans.*', 'produks.Nama as NamaProduk')
+            ->get();
         $bayar = Bayar::where('PenjualanId', $id)->get();
         $totalBayar = 0;
         $kembalian = 0;

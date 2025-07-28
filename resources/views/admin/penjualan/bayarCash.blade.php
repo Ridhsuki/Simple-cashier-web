@@ -45,8 +45,6 @@
         <div class="row vh-100 bg-light rounded  mx-0">
             <div class="col-12">
                 <div class="bg-light rounded h-100 p-4">
-                    {{-- <div class="card"> --}}
-                    {{-- <div class="card-header"> --}}
                     <h6 class="mb-4 d-flex justify-content-between align-items-center">
                         {{ $title }}
                         <a href="{{ route('penjualan.index') }}" class="btn btn-sm btn-warning">kembali</a>
