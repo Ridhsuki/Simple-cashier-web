@@ -8,6 +8,7 @@ use App\Models\Penjualan;
 use App\Models\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PenjualanController extends Controller
 {
@@ -45,24 +46,67 @@ class PenjualanController extends Controller
         $validate = $request->validate([
             'ProdukId' => 'required',
             'JumlahProduk' => 'required',
+            'ProdukId.*' => 'exists:produks,id',
+            'JumlahProduk.*' => 'numeric|min:1'
         ]);
-        $data_penjualan = [
-            'TanggalPenjualan' => date('Y-m-d'),
-            'UsersId' => Auth::user()->id,
-            'TotalHarga' => $request->total,
-        ];
-        $simpanPenjualan = Penjualan::create($data_penjualan);
-        foreach ($request->ProdukId as $key => $ProdukId) {
-            $simpanDetailPenjualan = DetailPenjualan::create([
-                'PenjualanId' => $simpanPenjualan->id,
-                'ProdukId' => $ProdukId,
-                'harga' => $request->harga[$key],
-                'JumlahProduk' => $request->JumlahProduk[$key],
-                'SubTotal' => $request->TotalHarga[$key],
-            ]);
-        }
 
-        return redirect()->route('penjualan.index')->with('success', 'Penjualan Berhasil Ditambahkan');
+        DB::beginTransaction();
+
+        try {
+            // Data penjualan yang akan disimpan
+            $data_penjualan = [
+                'TanggalPenjualan' => now(),
+                'UsersId' => Auth::user()->id,
+                'TotalHarga' => $request->total,
+            ];
+
+            $simpanPenjualan = Penjualan::create($data_penjualan);
+
+            foreach ($request->ProdukId as $key => $ProdukId) {
+                $product = Produk::find($ProdukId);
+                $quantitySold = $request->JumlahProduk[$key];
+
+                if ($product->Stok < $quantitySold) {
+                    DB::rollBack();
+                    return redirect()->back()->with('error', 'Stok tidak mencukupi untuk produk: ' . $product->Nama);
+                }
+
+                $product->Stok -= $quantitySold;
+                $product->save();
+
+                DetailPenjualan::create([
+                    'PenjualanId' => $simpanPenjualan->id,
+                    'ProdukId' => $ProdukId,
+                    'harga' => $request->harga[$key],
+                    'JumlahProduk' => $quantitySold,
+                    'SubTotal' => $request->TotalHarga[$key],
+                ]);
+            }
+
+            DB::commit();
+
+            return redirect()->route('penjualan.index')->with('success', 'Penjualan Berhasil Ditambahkan');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => 500, 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
+        // $data_penjualan = [
+        //     'TanggalPenjualan' => date('Y-m-d'),
+        //     'UsersId' => Auth::user()->id,
+        //     'TotalHarga' => $request->total,
+        // ];
+        // $simpanPenjualan = Penjualan::create($data_penjualan);
+        // foreach ($request->ProdukId as $key => $ProdukId) {
+        //     $simpanDetailPenjualan = DetailPenjualan::create([
+        //         'PenjualanId' => $simpanPenjualan->id,
+        //         'ProdukId' => $ProdukId,
+        //         'harga' => $request->harga[$key],
+        //         'JumlahProduk' => $request->JumlahProduk[$key],
+        //         'SubTotal' => $request->TotalHarga[$key],
+        //     ]);
+        // }
+
+        // return redirect()->route('penjualan.index')->with('success', 'Penjualan Berhasil Ditambahkan');
     }
     /**
      * Display the specified resource.

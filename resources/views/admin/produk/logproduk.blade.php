@@ -19,8 +19,6 @@
         <div class="row bg-light rounded  mx-0">
             <div class="col-12">
                 <div class="bg-light rounded h-100 p-4">
-                    {{-- <div class="card"> --}}
-                    {{-- <div class="card-header"> --}}
                     <h6 class="mb-4 d-flex justify-content-between align-items-center">
                         {{ $title }}
                         <a href="{{ route('produk.create') }}" class="btn btn-sm btn-primary">Tambah</a>
@@ -37,35 +35,32 @@
                         </div>
                     @endif
 
-                    {{-- </div> --}}
-                    {{-- <div class="card-body"> --}}
-                    <table class="table table-bordered table-responsive">
+                    <table class="table table-bordered table-responsive text-center">
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">Produk</th>
-                                <th scope="col">Penambahan Stok</th>
+                                <th scope="col">+/- Stok</th>
                                 <th scope="col">Nama</th>
                                 <th scope="col">Tanggal</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tbody>
-                                @foreach ($produks as $produk)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $produk->Nama }}</td>
-                                        <td>{{ $produk->JumlahProduk }}</td>
-                                        <td>{{ $produk->name }}</td>
-                                        <td>{{ $produk->created_at->diffForHumans() }}</td>
-                                        
-                                    </tr>
-                                @endforeach
-                            </tbody>
+                            @forelse ($produks as $produk)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $produk->Nama }}</td>
+                                    <td>{{ $produk->JumlahProduk }}</td>
+                                    <td>{{ $produk->name }}</td>
+                                    <td>{{ $produk->created_at->format('Y-m-d') }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5">Tidak ada data log produk</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
-                    {{-- </div> --}}
-                    {{-- </div> --}}
                 </div>
             </div>
         </div>

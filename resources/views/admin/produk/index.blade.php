@@ -141,7 +141,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($products as $product)
+                            @forelse ($products as $product)
                                 <tr>
                                     <td>
                                         <div class="form-check">
@@ -169,7 +169,11 @@
                                         </form>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center">Tidak ada data produk</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

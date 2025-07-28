@@ -49,14 +49,15 @@
                             <tbody id="penjualan">
                                 <tr>
                                     <td>
-                                        <select name="ProdukId[]" id="id_produk" class="form-control kode-produk" onchange="pilihProduk(this)">
+                                        <select name="ProdukId[]" id="id_produk" class="form-control kode-produk"
+                                            onchange="pilihProduk(this)">
                                             <option value="">Pilih Produk</option>
                                             @foreach ($produks as $produk)
                                                 <option value="{{ $produk->id }}" data-harga="{{ $produk->Harga }}">
                                                     {{ $produk->Nama }}
                                                 </option>
                                             @endforeach
-                                        </select>                                        
+                                        </select>
                                     </td>
                                     <td>
                                         <input type="text" name="harga[]" id="harga" class="form-control harga"

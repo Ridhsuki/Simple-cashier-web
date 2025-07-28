@@ -46,7 +46,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($penjualans as $penjualan)
+                            @forelse ($penjualans as $penjualan)
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $penjualan->TanggalPenjualan }}</td>
@@ -54,7 +54,6 @@
                                         @if ($penjualan->detailPenjualan->isNotEmpty())
                                             @foreach ($penjualan->detailPenjualan as $detail)
                                                 @if ($detail->produk)
-                                                    {{-- Tambahkan pengecekan ini --}}
                                                     {{ $detail->produk->Nama }} ({{ $detail->JumlahProduk }}
                                                     unit)<br>
                                                 @else
@@ -87,7 +86,11 @@
                                         @endif
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center">Tidak ada data penjualan</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
