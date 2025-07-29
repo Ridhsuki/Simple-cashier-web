@@ -12,11 +12,19 @@ use Milon\Barcode\Facades\DNS1DFacade;
 
 class ProdukController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Produk';
         $subtitle = 'Index';
-        $products = Produk::all();
+        $search = $request->input('search');
+        $products = Produk::query();
+        if ($search) {
+            $products->where('Nama', 'LIKE', '%' . $search . '%')
+                ->orWhere('Harga', 'LIKE', '%' . $search . '%');
+        }
+
+        $products = $products->latest()->get();
+
         return view('admin.produk.index', compact('title', 'subtitle', 'products'));
     }
     public function create()

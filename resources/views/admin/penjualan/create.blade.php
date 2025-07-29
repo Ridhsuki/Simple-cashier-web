@@ -18,7 +18,7 @@
         </nav>
         <div class="row vh-100 bg-light rounded  mx-0">
             <div class="col-12">
-                <form action="{{ route('penjualan.store') }}" method="post">
+                <form action="{{ route('penjualan.store') }}" method="post" id="formPenjualan">
                     <div class="bg-light rounded h-100 p-4">
                         <h6 class="mb-4 d-flex justify-content-between align-items-center">
                             {{ $title }}
@@ -176,5 +176,58 @@
 
             $('#total').val(total);
         }
+
+        $(document).ready(function() {
+            $('#formPenjualan').on('submit', function(e) {
+                let isValid = true;
+                let errorMessage = '';
+
+                if ($('#penjualan tr').length === 0) {
+                    errorMessage = 'Tambahkan setidaknya satu produk untuk melakukan penjualan.';
+                    isValid = false;
+                } else {
+                    $('#penjualan tr').each(function() {
+                        const produkId = $(this).find('.kode-produk').val();
+                        const jumlahProduk = $(this).find('.jumlahProduk').val();
+                        const totalHargaPerItem = $(this).find('.totalHarga').val();
+
+                        if (!produkId || produkId.trim() === '') {
+                            errorMessage = 'Pilih produk untuk setiap baris yang ditambahkan.';
+                            isValid = false;
+                            return false;
+                        }
+
+                        if (!jumlahProduk || parseFloat(jumlahProduk) <= 0 || isNaN(parseFloat(
+                                jumlahProduk))) {
+                            errorMessage =
+                                'Jumlah produk harus lebih dari 0 untuk setiap produk yang dipilih.';
+                            isValid = false;
+                            return false;
+                        }
+
+                        if (!totalHargaPerItem || parseFloat(totalHargaPerItem) <= 0 || isNaN(
+                                parseFloat(totalHargaPerItem))) {
+                            errorMessage =
+                                'Total harga untuk setiap produk tidak boleh kosong atau nol. Pastikan produk dan jumlah sudah benar.';
+                            isValid = false;
+                            return false;
+                        }
+                    });
+                }
+
+
+                if (!isValid) {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Validasi Gagal',
+                        text: errorMessage,
+                        confirmButtonText: 'Oke',
+                    });
+                }
+            });
+
+            hitungTotalAkhir();
+        });
     </script>
 @endsection

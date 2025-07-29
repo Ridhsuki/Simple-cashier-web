@@ -53,8 +53,15 @@
           <a href="#" class="sidebar-toggler flex-shrink-0">
               <i class="fa fa-bars"></i>
           </a>
-          <form class="d-none d-md-flex ms-4">
-              <input class="form-control border-0" type="search" placeholder="Search">
+          <form class="d-none d-md-flex ms-4" action="{{ route('produk.index') }}" method="GET">
+              <input class="form-control border-0" type="search" name="search" placeholder="Search Products"
+                  value="{{ request('search') }}">
+              <button type="submit" class="btn btn-link">
+                  <i class="fa fa-search"></i>
+              </button>
+              @if (request('search'))
+                  <a href="{{ route('produk.index') }}" class="btn btn-outline-danger">Reset</a>
+              @endif
           </form>
           <div class="navbar-nav align-items-center ms-auto">
               <div class="nav-item dropdown">
@@ -71,7 +78,7 @@
           </div>
       </nav>
       <!-- Navbar End -->
-      
+
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <script>

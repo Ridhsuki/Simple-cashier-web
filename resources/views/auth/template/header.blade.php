@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <title>Suki Cashier</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <meta content="Simple Cashier App For Your bussiness" name="keywords">
+    <meta content="Simple Cashier App For Your bussiness" name="description">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="https://exam.politeknikidn.id/assets/images/brand_idn.webp" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -130,7 +130,15 @@
                 var JumlahBayar = $('#JumlahBayar').val();
                 var Kembalian = $('#Kembalian').val();
                 var id = '{{ $penjualan->id }}';
-
+                if (!JumlahBayar || JumlahBayar.trim() === '' || !Kembalian || Kembalian.trim() === '') {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Form Belum Lengkap',
+                        text: 'Jumlah Bayar dan Kembalian tidak boleh kosong.',
+                        confirmButtonText: 'Oke',
+                    });
+                    return; 
+                }
                 if (parseFloat(JumlahBayar) < parseFloat(totalHarga)) {
                     Swal.fire({
                         icon: 'error',
