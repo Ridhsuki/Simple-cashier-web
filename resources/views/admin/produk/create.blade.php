@@ -72,30 +72,40 @@
                     success: function(data) {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Success',
-                            text: data.message,
-                            confirmButtonText: 'Ok'
-                        })
-                        $('input[name="Nama"]').val('');
-                        $('input[name="Harga"]').val('');
-                        $('input[name="Stok"]').val('');
+                            title: 'Berhasil!',
+                            text: data.message +
+                                ' Apa yang ingin Anda lakukan selanjutnya?',
+                            showCancelButton: true,
+                            confirmButtonText: 'Tambah Produk Lagi', 
+                            cancelButtonText: 'Kembali ke Daftar Produk'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $('input[name="Nama"]').val('');
+                                $('input[name="Harga"]').val('');
+                                $('input[name="Stok"]').val('');
+                                $('input[name="Nama"]').focus();
+                            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                                window.location.href = "{{ route('produk.index') }}";
+                            }
+                        });
                     },
-                    error: function(data) {
-                        console.log(data.message);
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error("AJAX Error:", textStatus, errorThrown);
+                        console.error("Response Text:", jqXHR.responseText);
+                        let errorMessage = 'Terjadi kesalahan. Silakan coba lagi.';
+
+                        if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+                            errorMessage = jqXHR.responseJSON.message;
+                        } else if (jqXHR.status === 500) {
+                            errorMessage = 'Terjadi kesalahan server internal.';
+                        }
+
                         Swal.fire({
                             icon: 'error',
-                            title: 'Error',
-                            text: data.message,
+                            title: 'Error!',
+                            text: errorMessage,
                             confirmButtonText: 'Ok'
-                        })
-                        if (data.status == 500) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: data.responseJSON.message,
-                                confirmButtonText: 'Ok'
-                            })
-                        }
+                        });
                     }
                 });
             });
